@@ -1,0 +1,23 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - nginx
+  - curl
+  - net-tools
+write_files:
+  - path: /var/www/html/index.html
+    content: |
+      <!DOCTYPE html>
+      <html><head><title>Azure LB Lab</title></head>
+      <body>
+      <h1>Azure Load Balancer Lab</h1>
+      <p>Server: HOSTNAME_PLACEHOLDER</p>
+      <p>IP: IP_PLACEHOLDER</p>
+      </body></html>
+  - path: /var/www/html/health
+    content: OK
+runcmd:
+  - sed -i "s/HOSTNAME_PLACEHOLDER/$(hostname)/g" /var/www/html/index.html
+  - sed -i "s/IP_PLACEHOLDER/$(hostname -I | awk '{print $1}')/g" /var/www/html/index.html
+  - systemctl enable nginx
+  - systemctl restart nginx

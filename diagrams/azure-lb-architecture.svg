@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8EEF7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D4DFF0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="azureBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0078D4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#005A9E;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#28A745;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E7E34;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+    </filter>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bgGradient)"/>
+  
+  <!-- Title Banner -->
+  <rect x="50" y="20" width="1100" height="50" rx="5" fill="#1E3A5F" filter="url(#shadow)"/>
+  <text x="600" y="52" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">PROJECT: AZURE PUBLIC LOAD BALANCER - HIGH AVAILABILITY WEB ARCHITECTURE</text>
+  
+  <!-- Internet Cloud -->
+  <ellipse cx="600" cy="120" rx="100" ry="35" fill="#6B7280" opacity="0.3"/>
+  <text x="600" y="125" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="bold" fill="#374151" text-anchor="middle">INTERNET</text>
+  
+  <!-- Arrow from Internet to Public IP -->
+  <path d="M600 155 L600 185" stroke="#0078D4" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#0078D4"/>
+    </marker>
+  </defs>
+  
+  <!-- Public IP Box -->
+  <rect x="480" y="190" width="240" height="70" rx="8" fill="white" stroke="#0078D4" stroke-width="2" filter="url(#softShadow)"/>
+  <circle cx="510" cy="225" r="20" fill="#0078D4"/>
+  <text x="510" y="230" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">IP</text>
+  <text x="600" y="218" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E3A5F" text-anchor="middle">Public IP Address</text>
+  <text x="600" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#6B7280" text-anchor="middle">pip-lb-web (Zone-Redundant)</text>
+  <text x="600" y="253" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0078D4" text-anchor="middle">Static Public IP</text>
+  
+  <!-- Arrow from Public IP to Load Balancer -->
+  <path d="M600 260 L600 290" stroke="#0078D4" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Azure Cloud Container -->
+  <rect x="100" y="280" width="1000" height="480" rx="10" fill="white" fill-opacity="0.5" stroke="#0078D4" stroke-width="2" stroke-dasharray="5,5"/>
+  <rect x="100" y="280" width="200" height="30" rx="5" fill="#0078D4"/>
+  <text x="200" y="300" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Microsoft Azure Cloud</text>
+  
+  <!-- Load Balancer Box -->
+  <rect x="400" y="295" width="400" height="160" rx="10" fill="white" stroke="#0078D4" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="400" y="295" width="400" height="35" rx="10" fill="url(#azureBlue)"/>
+  <rect x="400" y="320" width="400" height="10" fill="url(#azureBlue)"/>
+  
+  <!-- Load Balancer Icon -->
+  <circle cx="440" cy="312" r="15" fill="white"/>
+  <rect x="430" y="305" width="20" height="4" fill="#0078D4"/>
+  <rect x="430" y="311" width="20" height="4" fill="#0078D4"/>
+  <rect x="430" y="317" width="20" height="4" fill="#0078D4"/>
+  
+  <text x="600" y="317" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Azure Public Load Balancer</text>
+  <text x="600" y="355" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#1E3A5F" text-anchor="middle">lb-web-prod (Standard SKU)</text>
+  
+  <!-- Load Balancer Components -->
+  <rect x="420" y="370" width="160" height="35" rx="5" fill="#E8F4FD" stroke="#0078D4" stroke-width="1"/>
+  <text x="500" y="383" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0078D4" text-anchor="middle">Health Probe</text>
+  <text x="500" y="398" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">HTTP :80 /health (5s)</text>
+  
+  <rect x="420" y="410" width="160" height="35" rx="5" fill="#E8F4FD" stroke="#0078D4" stroke-width="1"/>
+  <text x="500" y="423" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#0078D4" text-anchor="middle">LB Rule</text>
+  <text x="500" y="438" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">TCP 80 → Backend :80</text>
+  
+  <rect x="620" y="370" width="160" height="35" rx="5" fill="#FFF3E0" stroke="#F57C00" stroke-width="1"/>
+  <text x="700" y="383" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#F57C00" text-anchor="middle">Inbound NAT Rules</text>
+  <text x="700" y="398" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">50001-50003 → SSH :22</text>
+  
+  <rect x="620" y="410" width="160" height="35" rx="5" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="700" y="423" font-family="Segoe UI, Arial, sans-serif" font-size="10" font-weight="bold" fill="#4CAF50" text-anchor="middle">Outbound Rule</text>
+  <text x="700" y="438" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151" text-anchor="middle">SNAT (10000 ports/VM)</text>
+  
+  <!-- Arrows from LB to VMs -->
+  <path d="M500 455 L250 520" stroke="#0078D4" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M600 455 L600 520" stroke="#0078D4" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M700 455 L950 520" stroke="#0078D4" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Backend Pool Label -->
+  <rect x="495" y="480" width="210" height="25" rx="5" fill="#0078D4"/>
+  <text x="600" y="497" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">Backend Pool: backend-pool-web</text>
+  
+  <!-- VM 1 -->
+  <rect x="140" y="525" width="180" height="120" rx="8" fill="white" stroke="#28A745" stroke-width="2" filter="url(#softShadow)"/>
+  <rect x="140" y="525" width="180" height="30" rx="8" fill="url(#greenGradient)"/>
+  <rect x="140" y="545" width="180" height="10" fill="url(#greenGradient)"/>
+  <circle cx="165" cy="540" r="10" fill="white"/>
+  <rect x="160" y="535" width="10" height="10" fill="#28A745"/>
+  <text x="230" y="544" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="bold" fill="white" text-anchor="middle">vm-web-1</text>
+  <text x="230" y="575" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#374151" text-anchor="middle">10.0.1.4</text>
+  <rect x="155" y="590" width="110" height="20" rx="3" fill="#E8F5E9"/>
+  <text x="210" y="604" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#28A745" text-anchor="middle">NGINX :80</text>
+  <text x="230" y="635" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">NAT: Port 50001 → :22</text>
+  
+  <!-- VM 2 -->
+  <rect x="510" y="525" width="180" height="120" rx="8" fill="white" stroke="#28A745" stroke-width="2" filter="url(#softShadow)"/>
+  <rect x="510" y="525" width="180" height="30" rx="8" fill="url(#greenGradient)"/>
+  <rect x="510" y="545" width="180" height="10" fill="url(#greenGradient)"/>
+  <circle cx="535" cy="540" r="10" fill="white"/>
+  <rect x="530" y="535" width="10" height="10" fill="#28A745"/>
+  <text x="600" y="544" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="bold" fill="white" text-anchor="middle">vm-web-2</text>
+  <text x="600" y="575" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#374151" text-anchor="middle">10.0.1.5</text>
+  <rect x="525" y="590" width="110" height="20" rx="3" fill="#E8F5E9"/>
+  <text x="580" y="604" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#28A745" text-anchor="middle">NGINX :80</text>
+  <text x="600" y="635" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">NAT: Port 50002 → :22</text>
+  
+  <!-- VM 3 -->
+  <rect x="880" y="525" width="180" height="120" rx="8" fill="white" stroke="#28A745" stroke-width="2" filter="url(#softShadow)"/>
+  <rect x="880" y="525" width="180" height="30" rx="8" fill="url(#greenGradient)"/>
+  <rect x="880" y="545" width="180" height="10" fill="url(#greenGradient)"/>
+  <circle cx="905" cy="540" r="10" fill="white"/>
+  <rect x="900" y="535" width="10" height="10" fill="#28A745"/>
+  <text x="970" y="544" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="bold" fill="white" text-anchor="middle">vm-web-3</text>
+  <text x="970" y="575" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#374151" text-anchor="middle">10.0.1.6</text>
+  <rect x="895" y="590" width="110" height="20" rx="3" fill="#E8F5E9"/>
+  <text x="950" y="604" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#28A745" text-anchor="middle">NGINX :80</text>
+  <text x="970" y="635" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">NAT: Port 50003 → :22</text>
+  
+  <!-- Subnet Box -->
+  <rect x="130" y="660" width="940" height="45" rx="8" fill="#F3E8FF" stroke="#7C3AED" stroke-width="2" filter="url(#softShadow)"/>
+  <text x="600" y="680" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="bold" fill="#7C3AED" text-anchor="middle">Subnet: snet-backend (10.0.1.0/24) | NSG: nsg-backend | Availability Set: avset-web</text>
+  <text x="600" y="697" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">Allow: HTTP (80), HTTPS (443), SSH from AzureLoadBalancer | Fault Domains: 2 | Update Domains: 5</text>
+  
+  <!-- VNet Box -->
+  <rect x="120" y="715" width="960" height="35" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+  <text x="600" y="738" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="bold" fill="#2563EB" text-anchor="middle">Virtual Network: vnet-lb-lab (10.0.0.0/16) | Region: Canada Central</text>
+  
+  <!-- Monitoring Box on the right -->
+  <rect x="850" y="320" width="230" height="130" rx="8" fill="white" stroke="#9333EA" stroke-width="2" filter="url(#softShadow)"/>
+  <rect x="850" y="320" width="230" height="28" rx="8" fill="#9333EA"/>
+  <rect x="850" y="340" width="230" height="8" fill="#9333EA"/>
+  <text x="965" y="340" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">Monitoring & Diagnostics</text>
+  
+  <text x="870" y="370" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">📊 Azure Monitor Metrics</text>
+  <text x="870" y="388" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">📈 Log Analytics: law-lb-lab</text>
+  <text x="870" y="406" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">🔍 Health Probe Status</text>
+  <text x="870" y="424" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">⚡ DipAvailability Metrics</text>
+  <text x="870" y="442" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">🔔 Alert Rules</text>
+  
+  <!-- Arrow from LB to Monitoring -->
+  <path d="M800 380 L845 380" stroke="#9333EA" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arrowPurple)"/>
+  <defs>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9333EA"/>
+    </marker>
+  </defs>
+  
+  <!-- Legend -->
+  <rect x="120" y="85" width="180" height="100" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1" filter="url(#softShadow)"/>
+  <text x="130" y="105" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#1E3A5F">Legend</text>
+  <rect x="130" y="115" width="12" height="12" fill="#0078D4"/>
+  <text x="148" y="125" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">Load Balancer</text>
+  <rect x="130" y="133" width="12" height="12" fill="#28A745"/>
+  <text x="148" y="143" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">Backend VMs</text>
+  <rect x="130" y="151" width="12" height="12" fill="#9333EA"/>
+  <text x="148" y="161" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">Monitoring</text>
+  <rect x="130" y="169" width="12" height="12" fill="#7C3AED"/>
+  <text x="148" y="179" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">Network/Subnet</text>
+  
+  <!-- Key Features Box -->
+  <rect x="920" y="85" width="230" height="100" rx="5" fill="white" stroke="#CBD5E1" stroke-width="1" filter="url(#softShadow)"/>
+  <text x="930" y="105" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="bold" fill="#1E3A5F">Key Features</text>
+  <text x="930" y="123" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">✓ Standard SKU (99.99% SLA)</text>
+  <text x="930" y="139" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">✓ Zone-Redundant Public IP</text>
+  <text x="930" y="155" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">✓ HTTP Health Probes</text>
+  <text x="930" y="171" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#374151">✓ Availability Set (HA)</text>
+  
+</svg>
