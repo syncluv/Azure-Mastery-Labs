@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Azure Public Load Balancer - Enterprise High Availability Lab
 
 ![Azure](https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)
@@ -156,3 +157,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ⭐ If you found this lab helpful, please give it a star!
+=======
+# Azure-Mastery-Labs
+Azure Personalize Enterprise level Labs (Advanced)
+>>>>>>> 266748e0ec06ed1e49a64121761558bbdc32ad60
