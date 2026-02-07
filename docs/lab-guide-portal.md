@@ -4,7 +4,7 @@ A complete step-by-step guide for deploying an enterprise-grade Azure Public Loa
 
 ---
 
-## 📋 Lab Overview
+##  Lab Overview
 
 | | |
 |---|---|
@@ -14,7 +14,7 @@ A complete step-by-step guide for deploying an enterprise-grade Azure Public Loa
 
 ---
 
-## 🎯 What You'll Build
+## What You'll Build
 
 - Standard SKU Public Load Balancer (Zone-Redundant)
 - 3 Ubuntu VMs with Nginx in an Availability Set
@@ -26,7 +26,7 @@ A complete step-by-step guide for deploying an enterprise-grade Azure Public Loa
 
 ---
 
-## 📝 Resource Naming Convention
+##  Resource Naming Convention
 
 | Resource | Name |
 |----------|------|
@@ -561,7 +561,7 @@ This deletes all resources and takes 5-10 minutes.
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
@@ -572,11 +572,11 @@ This deletes all resources and takes 5-10 minutes.
 
 ---
 
-## 📚 Next Steps
+## Next Steps
 
 - Add HTTPS with SSL certificates
 - Configure session persistence
 - Set up Azure Monitor alerts
 - Try the CLI deployment method
 
-See [lab-guide-cli.md](lab-guide-cli.md) for the Azure CLI version.
+If interested let me know and i will post a similar step for the Azure CLI version.
