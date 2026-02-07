@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Azure Public Load Balancer - Enterprise High Availability Lab
 
 ![Azure](https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white)
