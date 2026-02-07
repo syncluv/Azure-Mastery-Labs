@@ -6,13 +6,13 @@
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
 
-## 📋 Overview
+##  Overview
 
 This repository contains a complete hands-on lab for deploying a **production-grade Azure Public Load Balancer** with high availability web application architecture. The lab demonstrates enterprise best practices for load balancing, health monitoring, and secure management access.
 
 ![Architecture Diagram](diagrams/azure-lb-architecture.svg)
 
-## 🎯 Learning Objectives
+##  Learning Objectives
 
 - Deploy Azure Public Load Balancer (Standard SKU)
 - Configure backend pools with VMs in availability sets
@@ -23,7 +23,7 @@ This repository contains a complete hands-on lab for deploying a **production-gr
 - Enable Azure Monitor diagnostics and Log Analytics
 - Troubleshoot common load balancer issues
 
-## 🏗️ Architecture
+##  Architecture
 
 | Component | Details |
 |-----------|---------|
@@ -33,7 +33,7 @@ This repository contains a complete hands-on lab for deploying a **production-gr
 | **Availability** | Availability Set (2 FD, 5 UD) |
 | **Monitoring** | Azure Monitor + Log Analytics |
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 azure-load-balancer-lab/
@@ -55,7 +55,7 @@ azure-load-balancer-lab/
     └── outputs.tf
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -101,7 +101,7 @@ export VNET_NAME="vnet-lb-lab"
 | vm-web-2 | `ssh azureadmin@<PUBLIC_IP> -p 50002` |
 | vm-web-3 | `ssh azureadmin@<PUBLIC_IP> -p 50003` |
 
-## 📊 Monitoring
+##  Monitoring
 
 ### Key Metrics
 
@@ -120,14 +120,14 @@ AzureMetrics
 | render timechart
 ```
 
-## 🧹 Cleanup
+##  Cleanup
 
 ```bash
 # Delete all resources
 az group delete --name rg-lb-lab-prod --yes --no-wait
 ```
 
-## 💡 Key Learnings
+##  Key Learnings
 
 1. **Always use Standard SKU** - Basic SKU is deprecated and lacks SLA
 2. **Enable TCP Reset** - Helps applications detect dead connections
@@ -135,23 +135,21 @@ az group delete --name rg-lb-lab-prod --yes --no-wait
 4. **Use health probe endpoints** - Dedicated /health path for accurate monitoring
 5. **Tag resources** - Essential for cost management and governance
 
-## 📚 Resources
+##  Resources
 
 - [Azure Load Balancer Documentation](https://docs.microsoft.com/azure/load-balancer/)
 - [Load Balancer SKU Comparison](https://docs.microsoft.com/azure/load-balancer/skus)
 - [Health Probe Best Practices](https://docs.microsoft.com/azure/load-balancer/load-balancer-custom-probe-overview)
 
-## 🏷️ Tags
+##  Tags
 
 `azure` `load-balancer` `high-availability` `nginx` `infrastructure` `cloud` `devops` `networking`
 
-## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👤 Author
 
-**Charles** - Principal Technical Support Specialist  
+**Charles Okocha** - Senior Cybersecurity Technical Support Specialist  
 *OpenText Cybersecurity - ArcSight Support*
 
 ---
