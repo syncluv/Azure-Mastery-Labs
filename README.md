@@ -10,7 +10,7 @@
 
 This repository contains a complete hands-on lab for deploying a **production-grade Azure Public Load Balancer** with high availability web application architecture. The lab demonstrates enterprise best practices for load balancing, health monitoring, and secure management access.
 
-![Architecture Diagram](diagrams/azure-lb-architecture.svg)
+![Architecture Diagram](https://github.com/syncluv/Azure-Mastery-Labs/blob/main/diagrams/azure-lb-architecture.png)
 
 ##  Learning Objectives
 
