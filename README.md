@@ -22,11 +22,41 @@ A collection of **production-grade Azure infrastructure labs** demonstrating ent
 ```
 Internet → Public Load Balancer → 3x Ubuntu VMs (Nginx)
 ```
+## 🛠️ Technologies Used
+
+- **Compute:** Virtual Machines, Availability Sets, Ubuntu 22.04 LTS
+- **Networking:** Virtual Network, Subnets, Public IP, Standard Load Balancer
+- **Security:** Network Security Groups (NSG), SSH Keys
+- **Load Balancing:** Health Probes, Load Balancing Rules, Inbound NAT Rules, Outbound Rules
+- **Web Server:** Nginx, Cloud-init
+- **Monitoring:** Log Analytics, Diagnostic Settings
+- **Tools:** Azure CLI, Azure Portal
 
 ### Lab 02: Defense in Depth Security
 ```
 Internet → Front Door (WAF) → App Gateway (WAF) → Firewall → Internal LB → VMs
 ```
+## 🛠️ Technologies Used
+
+- **Compute:** Virtual Machines, Availability Sets, Ubuntu 22.04 LTSNetworkingVirtual Network, Subnets, Route Tables, Internal Load Balancer
+- **Security (L7 Global):** Azure Front Door Premium, Web Application Firewall (WAF)
+- **Security (L7 Regional):** Application Gateway v2, WAF v2, OWASP 3.2 Rules
+- **Security (L3/L4):** Azure Firewall Premium, IDPS, Threat Intelligence
+- **Security (Network):** Network Security Groups, Private Endpoints
+- **Web Server:** Nginx, Cloud-init
+- **Monitoring:** Log Analytics, Diagnostic Settings, Azure Monitor
+- **Tools:** Azure CLI, Azure Portal, KQL Queries Serial Console
+
+![Azure VMs](https://img.shields.io/badge/Azure-VMs-0078D4?style=flat-square&logo=microsoftazure)
+![Load Balancer](https://img.shields.io/badge/Azure-Load%20Balancer-0078D4?style=flat-square&logo=microsoftazure)
+![Front Door](https://img.shields.io/badge/Azure-Front%20Door-0078D4?style=flat-square&logo=microsoftazure)
+![App Gateway](https://img.shields.io/badge/Azure-App%20Gateway-0078D4?style=flat-square&logo=microsoftazure)
+![Firewall](https://img.shields.io/badge/Azure-Firewall-DC3545?style=flat-square&logo=microsoftazure)
+![WAF](https://img.shields.io/badge/Azure-WAF-FD7E14?style=flat-square&logo=microsoftazure)
+![NSG](https://img.shields.io/badge/Azure-NSG-28A745?style=flat-square&logo=microsoftazure)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white)
+![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=ubuntu&logoColor=white)
+![Log Analytics](https://img.shields.io/badge/Azure-Log%20Analytics-0078D4?style=flat-square&logo=microsoftazure)
 
 ### Lab 03: Enterprise Migration
 ```
