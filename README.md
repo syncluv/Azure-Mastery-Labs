@@ -43,7 +43,7 @@ On-Prem (Hyper-V) → Azure Migrate → Azure PaaS + IaaS → Azure DevOps CI/CD
 
 ## 💰 Cost Warning
 
-⚠️ These labs use premium Azure services. **Delete resources immediately after completing each lab!**
+These labs use premium Azure services. **Delete resources immediately after completing each lab!**
 
 | Lab | Estimated Cost |
 |-----|----------------|
@@ -53,12 +53,12 @@ On-Prem (Hyper-V) → Azure Migrate → Azure PaaS + IaaS → Azure DevOps CI/CD
 
 ## 👤 Author
 
-**Charles** - Principal Technical Support Specialist at OpenText Cybersecurity
+**Charles Okocha** - Snr Technical Support Specialist at OpenText Cybersecurity
 
 - GitHub: [@syncluv](https://github.com/syncluv)
 - LinkedIn: [Connect with me](https://linkedin.com/in/yourprofile)
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
