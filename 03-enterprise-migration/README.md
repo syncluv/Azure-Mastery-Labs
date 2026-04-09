@@ -10,6 +10,9 @@ A complete **enterprise migration lab** demonstrating the migration of a multi-t
 
 ## 🏗️ Architecture
 
+<img width="1477" height="601" alt="image" src="https://github.com/user-attachments/assets/a9009477-a4a1-49c8-95a6-c596573ac89e" />
+
+
 ### On-Premises Environment (Simulated with Hyper-V)
 
 ```
