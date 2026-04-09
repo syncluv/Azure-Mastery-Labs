@@ -1,0 +1,56 @@
+# Azure DevOps Pipeline for Web App Deployment
+# Deploys ASP.NET application to Azure App Service
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - web-app/*
+
+pool:
+  name: 'self-hosted-pool'
+
+variables:
+  azureSubscription: 'azure-lab03-connection'
+  webAppName: 'app-lab03-web'
+
+stages:
+- stage: Build
+  displayName: 'Build Web App'
+  jobs:
+  - job: Build
+    displayName: 'Build and Package'
+    steps:
+    - task: CopyFiles@2
+      displayName: 'Copy web-app files'
+      inputs:
+        SourceFolder: 'web-app'
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'web-app'
+
+- stage: Deploy
+  displayName: 'Deploy to App Service'
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    displayName: 'Deploy Web App'
+    environment: 'Production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy to Azure App Service'
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              appType: 'webApp'
+              appName: '$(webAppName)'
+              package: '$(Pipeline.Workspace)/web-app'

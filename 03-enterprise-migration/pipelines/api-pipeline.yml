@@ -1,0 +1,35 @@
+# Azure DevOps Pipeline for Node.js API Deployment
+# Deploys Node.js application to Azure VM
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - api-app/*
+
+pool:
+  name: 'self-hosted-pool'
+
+stages:
+- stage: Deploy
+  displayName: 'Deploy API to Azure VM'
+  jobs:
+  - job: Deploy
+    displayName: 'Deploy and Restart'
+    steps:
+    - script: |
+        echo "Deploying API to Azure VM..."
+        cp -r $(Build.SourcesDirectory)/api-app/* /home/azureadmin/api/
+        cd /home/azureadmin/api
+        npm install
+        pm2 restart corp-api || pm2 start app.js --name "corp-api"
+        pm2 save
+        echo "Deployment complete!"
+      displayName: 'Deploy and restart API'
+
+    - script: |
+        echo "Verifying deployment..."
+        curl -s http://localhost:3000/api/health || echo "Health check pending..."
+      displayName: 'Verify deployment'
