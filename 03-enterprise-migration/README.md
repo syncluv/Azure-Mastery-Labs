@@ -309,15 +309,7 @@ stages:
 | API Users | http://[VM-IP]:3000/api/users |
 
 ## 📖 Documentation
-
-- [On-Premises Setup Guide](docs/01-onprem-setup.md)
-- [Azure Landing Zone](docs/02-azure-landing-zone.md)
-- [File Migration Guide](docs/03-file-migration.md)
-- [SQL Migration Guide](docs/04-sql-migration.md)
-- [Web App Migration](docs/05-webapp-migration.md)
-- [API Migration](docs/06-api-migration.md)
-- [CI/CD Setup](docs/07-cicd-setup.md)
-- [Troubleshooting Guide](docs/troubleshooting.md)
+For Documentation you can reachout via linkedin
 
 ## 👤 Author
 
