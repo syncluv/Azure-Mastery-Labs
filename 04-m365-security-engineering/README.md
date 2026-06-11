@@ -494,24 +494,6 @@ Remove-TechFluxUserAccess -UserUPN "test.employee@TechFlux597.onmicrosoft.com"
 
 ---
 
-## 📸 Screenshots
-
-| File | Description |
-|---|---|
-| `screenshots/01-ca-policies-list.png` | All 6 CA policies (CA001–CA006) with On/Report-only states |
-| `screenshots/02-what-if-test1.png` | What If — Sarah from 8.8.8.8 — CA001 fires |
-| `screenshots/03-what-if-test2.png` | What If — Sarah from trusted IP — CA001 excluded |
-| `screenshots/04-what-if-test3.png` | What If — Exchange ActiveSync — CA002 blocks |
-| `screenshots/05-what-if-test4.png` | What If — James (break-glass) — CA001 not applied |
-| `screenshots/06-defender-device-inventory.png` | desktop-1mjt35n active in Device Inventory |
-| `screenshots/07-defender-incident-graph.png` | Incident #1 — evidence chain — Spaceship → processes → 127.0.0.1 |
-| `screenshots/08-sentinel-analytics-rules.png` | 2 custom KQL rules — High + Medium — Custom Content |
-| `screenshots/09-dlp-policies-list.png` | 3 DLP policies in simulation mode |
-| `screenshots/10-dlp-policy-tip.png` | Live policy tip — "contains 1 or more credit card numbers" |
-| `screenshots/11-powershell-mguser.png` | Get-MgUser output — all 4 tenant users listed |
-
----
-
 ## 💰 Cost
 
 | Resource | Cost |
