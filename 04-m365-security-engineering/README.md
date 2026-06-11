@@ -169,7 +169,7 @@ A **production-grade Microsoft 365 and Azure security engineering lab** built fr
 
 ### What was built
 
-**Device onboarded:** `desktop-1mjt35n` (Windows 11 25H2)  
+**Device onboarded:** `desktop-xxxxxx` (Windows 11 25H2)  
 **Method:** Local script — `WindowsDefenderATPLocalOnboardingScript.cmd`  
 **Sensor health:** Active
 
@@ -185,7 +185,7 @@ MITRE ATT&CK: T1059.001 — Command and Scripting Interpreter: PowerShell
 
 **Evidence chain correlated automatically:**
 ```
-Spaceship (user) → DESKTOP-1MJT35N (device) → 2 Processes → 127.0.0.1 (network)
+Spaceship (user) → DESKTOP-xxxxxx (device) → 2 Processes → 127.0.0.1 (network)
 ```
 
 **ASR policy:** `ASR — Lab baseline policy`
@@ -541,6 +541,7 @@ Remove-TechFluxUserAccess -UserUPN "test.employee@TechFlux597.onmicrosoft.com"
 
 - GitHub: [@syncluv](https://github.com/syncluv)
 - LinkedIn: [Connect with me](https://linkedin.com/in/yourprofile)
+- Portfolio: Techwithcharles.ca
 
 ---
 
