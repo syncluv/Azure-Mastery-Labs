@@ -21,6 +21,7 @@ A collection of **production-grade Azure infrastructure labs** demonstrating ent
 | [02 - Secure Web Architecture](./02-secure-web-architecture) | 4-layer defense: Front Door + App Gateway + Firewall + LB | ✅ Complete |
 | [03 - Enterprise Migration](./03-enterprise-migration) | On-prem to Azure migration with Azure DevOps CI/CD | ✅ Complete |
 | [04 - M365 & Azure Security Engineering](./04-m365-security-engineering) | Zero Trust · Defender · Sentinel · Purview DLP · Automation | ✅ Complete |
+| [05 - Multi-Region SD-WAN on Azure](./lab-05-sdwan-azure) | Hub-and-spoke WireGuard mesh across Canada Central, East US, and West Europe, plus an on-prem pfSense edge | ✅ Complete |
 
 ---
 
@@ -51,6 +52,15 @@ Entra ID (CA001–CA006) → Defender for Endpoint → Purview DLP → Sentinel 
 Identity Protection → Azure Policy → PowerShell Automation → Logic App SOAR
 ```
 
+### Lab 05: Multi-Region SD-WAN on Azure
+
+```
+Home Lab (pfSense) ⇄ Hub (VyOS, Canada Central)
+                          ⇅                    ⇅
+                 Spoke A (East US)  ⇄  Spoke B (West Europe)
+                        [direct WireGuard shortcut]
+```
+
 ---
 
 ## 🛠️ Technologies Used
@@ -77,6 +87,16 @@ Identity Protection → Azure Policy → PowerShell Automation → Logic App SOA
 [![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)](https://microsoft.com/powershell)
 [![KQL](https://img.shields.io/badge/KQL-Query_Language-0078D4?style=flat-square)](https://learn.microsoft.com/kusto)
 
+**Lab 05**
+
+[![Azure VMs](https://img.shields.io/badge/Azure-VMs-0078D4?style=flat-square&logo=microsoftazure)](https://azure.microsoft.com)
+[![Azure CLI](https://img.shields.io/badge/Azure-CLI-0078D4?style=flat-square&logo=microsoftazure)](https://learn.microsoft.com/cli/azure)
+[![NSG](https://img.shields.io/badge/Azure-NSG-28A745?style=flat-square&logo=microsoftazure)](https://azure.microsoft.com)
+[![VyOS](https://img.shields.io/badge/VyOS-Router_OS-28A745?style=flat-square)](https://vyos.io)
+[![WireGuard](https://img.shields.io/badge/WireGuard-VPN-88171A?style=flat-square&logo=wireguard&logoColor=white)](https://www.wireguard.com)
+[![pfSense](https://img.shields.io/badge/pfSense-Firewall-EA7125?style=flat-square)](https://www.pfsense.org)
+[![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)](https://microsoft.com/powershell)
+
 ---
 
 ## 💰 Cost Warning
@@ -87,6 +107,7 @@ Identity Protection → Azure Policy → PowerShell Automation → Logic App SOA
 | Lab 02 | ~$50–80/day | Front Door + Firewall Premium are expensive |
 | Lab 03 | ~$30–50/day | Delete all migration resources after lab |
 | Lab 04 | **$0** | Runs entirely within M365 + Azure free tiers |
+| Lab 05 | ~$1–5 total | 3 small VMs across 3 regions; deallocated between sessions, fully destroyed after the lab |
 
 > **Always delete resources immediately after completing each lab!**
 
