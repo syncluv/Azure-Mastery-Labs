@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lab 3 · SD-WAN Traffic Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --panel: #141416;
+    --line: #2e2e33;
+    --line-strong: #b3560c;
+    --text: #d7d7d9;
+    --text-dim: #a8a8ad;
+    --text-faint: #8e8e94;
+    --heading: #e4e4e6;
+    --accent: #ff7a1a;
+    --accent-soft: #ffb070;
+    --accent-softer: #ffd0a8;
+    --kicker: #ff8a2b;
+  }
+  * { box-sizing: border-box; }
+  html, body { background: var(--bg); }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 48px 24px 72px; display: flex; flex-direction: column; gap: 28px; }
+  .kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--kicker); }
+  h1 { font-weight: 500; font-size: clamp(26px, 4.5vw, 40px); line-height: 1.1; margin: 10px 0 12px; letter-spacing: -0.02em; color: var(--heading); }
+  .intro { margin: 0; max-width: 62ch; color: var(--text-dim); font-size: 15px; line-height: 1.6; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  button.mode-btn {
+    border-radius: 8px; border: 1px solid transparent; padding: 9px 16px; font-family: inherit;
+    font-size: 13.5px; cursor: pointer; transition: background .15s ease, color .15s ease, border-color .15s ease;
+    color: var(--text-dim); background: transparent; border-color: var(--line);
+  }
+  button.mode-btn:hover { background: rgba(255,122,26,.10); color: var(--accent-softer); }
+  button.mode-btn.active { border-color: var(--accent); color: var(--accent-soft); background: rgba(255,122,26,.10); }
+  button.mode-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .mode-note { font-size: 13px; color: var(--text-faint); margin-left: 6px; }
+  figure { margin: 0; background: linear-gradient(160deg, #121213 0%, #0a0a0b 62%); border: 1px solid var(--line); border-radius: 8px; padding: 8px 8px 0; }
+  figcaption { padding: 14px 16px 16px; font-size: 12px; color: var(--text-faint); }
+  svg text { font-family: 'Inter', system-ui, sans-serif; }
+  .tunnel-group { transition: opacity .35s ease; }
+  .blocked-group { transition: opacity .35s ease; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; align-items: start; }
+  h2 { font-weight: 500; font-size: 20px; margin: 0 0 12px; color: var(--heading); }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 12px; color: #9a9aa0; border-bottom: 1px solid var(--line); padding: 6px 4px; font-weight: 500; }
+  td { font-size: 13px; border-bottom: 1px solid #232327; padding: 8px 4px; color: var(--text); }
+  td.result { color: var(--text-dim); }
+  td.rtt { text-align: right; color: var(--accent-soft); white-space: nowrap; }
+  .foot-note { font-size: 13px; line-height: 1.65; color: var(--text-dim); margin: 16px 0 0; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; margin-bottom: 14px; }
+  .card-kicker { color: var(--kicker); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+  .card-title { color: var(--heading); font-weight: 500; font-size: 15px; margin-bottom: 6px; }
+  .card-body { color: var(--text-dim); font-size: 13.5px; line-height: 1.6; }
+  .card-body code { color: var(--accent-soft); font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12.5px; }
+  @media (prefers-reduced-motion: reduce) {
+    circle[data-dot] { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Lab 3 · Multi-region SD-WAN on Azure</div>
+    <h1>How traffic actually moves across the WireGuard mesh</h1>
+    <p class="intro">Four sites, four point-to-point tunnels, one hub. Dot travel time below is scaled to the measured round-trip time of each link, so the Canada&nbsp;&harr;&nbsp;West&nbsp;Europe hop visibly lags the Canada&nbsp;&harr;&nbsp;East&nbsp;US one.</p>
+  </header>
+
+  <div class="controls">
+    <button type="button" class="mode-btn active" data-mode="all">All four tunnels</button>
+    <button type="button" class="mode-btn" data-mode="direct">Direct spoke shortcut</button>
+    <button type="button" class="mode-btn" data-mode="relay">Transit via hub</button>
+    <span class="mode-note" id="modeNote">Four independently verified tunnels, all carrying real bidirectional traffic.</span>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 1000 560" style="width:100%; height:auto; display:block;" role="img" aria-label="Topology of four sites joined by four WireGuard tunnels">
+      <defs>
+        <linearGradient id="tunnelGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#b3560c" stop-opacity="0.15"/>
+          <stop offset="0.5" stop-color="#ff7a1a" stop-opacity="0.85"/>
+          <stop offset="1" stop-color="#b3560c" stop-opacity="0.15"/>
+        </linearGradient>
+        <radialGradient id="nodeGlow">
+          <stop offset="0" stop-color="#ff7a1a" stop-opacity="0.22"/>
+          <stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <g class="tunnel-group" data-group="hub">
+        <path id="t1" d="M 150 392 Q 176 250 318 162" fill="none" stroke="url(#tunnelGrad)" stroke-width="2"/>
+        <circle r="5" fill="#ffb070" data-dot>
+          <animateMotion dur="0.9s" repeatCount="indefinite" rotate="auto"><mpath href="#t1"/></animateMotion>
+        </circle>
+        <circle r="5" fill="#ffb070" data-dot>
+          <animateMotion dur="0.9s" begin="0.45s" repeatCount="indefinite" rotate="auto"><mpath href="#t1"/></animateMotion>
+        </circle>
+        <text x="130" y="272" fill="#b9b9bd" font-size="12">wg0 · 172.16.1.0/30</text>
+        <text x="130" y="290" fill="#9a9aa0" font-size="11">local RTT · 0% loss</text>
+      </g>
+
+      <g class="tunnel-group" data-group="hub">
+        <path id="t2" d="M 400 158 Q 470 226 598 300" fill="none" stroke="url(#tunnelGrad)" stroke-width="2"/>
+        <circle r="5" fill="#ffb070" data-dot>
+          <animateMotion dur="1.5s" repeatCount="indefinite"><mpath href="#t2"/></animateMotion>
+        </circle>
+        <circle r="5" fill="#ffb070" data-dot>
+          <animateMotion dur="1.5s" begin="0.75s" repeatCount="indefinite"><mpath href="#t2"/></animateMotion>
+        </circle>
+        <text x="418" y="246" fill="#b9b9bd" font-size="12">wg1 · 172.16.2.0/30</text>
+        <text x="418" y="264" fill="#9a9aa0" font-size="11">~20 ms · 7/7 packets</text>
+      </g>
+
+      <g class="tunnel-group" data-group="hub">
+        <path id="t3" d="M 462 104 Q 626 34 788 100" fill="none" stroke="url(#tunnelGrad)" stroke-width="2"/>
+        <circle r="5" fill="#ffb070" data-dot>
+          <animateMotion dur="3.4s" repeatCount="indefinite"><mpath href="#t3"/></animateMotion>
+        </circle>
+        <circle r="5" fill="#ffb070" data-dot>
+          <animateMotion dur="3.4s" begin="1.7s" repeatCount="indefinite"><mpath href="#t3"/></animateMotion>
+        </circle>
+        <text x="556" y="44" text-anchor="middle" fill="#b9b9bd" font-size="12">wg2 · 172.16.3.0/30</text>
+        <text x="556" y="62" text-anchor="middle" fill="#9a9aa0" font-size="11">~87 ms · 6/6 packets</text>
+      </g>
+
+      <g class="tunnel-group" data-group="direct">
+        <path id="t4" d="M 722 300 Q 836 244 878 158" fill="none" stroke="#ff7a1a" stroke-width="2" stroke-dasharray="7 6"/>
+        <circle r="5.5" fill="#ffd0a8" data-dot>
+          <animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#t4"/></animateMotion>
+        </circle>
+        <circle r="5.5" fill="#ffd0a8" data-dot>
+          <animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite"><mpath href="#t4"/></animateMotion>
+        </circle>
+        <text x="790" y="300" fill="#ffb070" font-size="12">wg3 · 172.16.4.0/30 — direct shortcut</text>
+        <text x="790" y="318" fill="#9a9aa0" font-size="11">~82 ms · 9/10 packets</text>
+      </g>
+
+      <g>
+        <circle cx="150" cy="436" r="86" fill="url(#nodeGlow)"/>
+        <rect x="50" y="398" width="210" height="80" rx="8" fill="#17171a" stroke="#2e2e33"/>
+        <text x="68" y="424" fill="#e4e4e6" font-size="15" font-weight="500">Home Lab</text>
+        <text x="68" y="444" fill="#a8a8ad" font-size="12">pfSense · 10.10.0.0/16</text>
+        <text x="68" y="463" fill="#9a9aa0" font-size="11">On-prem Hyper-V, existing gateway</text>
+      </g>
+
+      <g>
+        <circle cx="360" cy="118" r="96" fill="url(#nodeGlow)"/>
+        <rect x="260" y="78" width="210" height="80" rx="8" fill="#17171a" stroke="#b3560c"/>
+        <rect x="260" y="78" width="3" height="80" rx="1.5" fill="#ff7a1a"/>
+        <text x="278" y="104" fill="#e4e4e6" font-size="15" font-weight="500">Hub · Canada Central</text>
+        <text x="278" y="124" fill="#a8a8ad" font-size="12">VyOS · 10.20.0.0/16</text>
+        <text x="278" y="143" fill="#9a9aa0" font-size="11">Relay point, IP forwarding on NIC</text>
+      </g>
+
+      <g>
+        <circle cx="660" cy="340" r="86" fill="url(#nodeGlow)"/>
+        <rect x="560" y="300" width="200" height="80" rx="8" fill="#17171a" stroke="#2e2e33"/>
+        <text x="578" y="326" fill="#e4e4e6" font-size="15" font-weight="500">Spoke A · East US</text>
+        <text x="578" y="346" fill="#a8a8ad" font-size="12">VyOS · 10.30.0.0/16</text>
+        <text x="578" y="365" fill="#9a9aa0" font-size="11">Branch site</text>
+      </g>
+
+      <g>
+        <circle cx="888" cy="118" r="86" fill="url(#nodeGlow)"/>
+        <rect x="788" y="78" width="200" height="80" rx="8" fill="#17171a" stroke="#2e2e33"/>
+        <text x="806" y="104" fill="#e4e4e6" font-size="15" font-weight="500">Spoke B · W. Europe</text>
+        <text x="806" y="124" fill="#a8a8ad" font-size="12">VyOS · 10.40.0.0/16</text>
+        <text x="806" y="143" fill="#9a9aa0" font-size="11">Branch site</text>
+      </g>
+
+      <g class="blocked-group" id="blockedNote" style="opacity:0">
+        <rect x="52" y="500" width="470" height="44" rx="8" fill="#2a1607" stroke="#b3560c"/>
+        <circle cx="76" cy="522" r="7" fill="none" stroke="#ffa45c" stroke-width="1.5"/>
+        <path d="M 72 518 L 80 526 M 80 518 L 72 526" stroke="#ffa45c" stroke-width="1.5"/>
+        <text x="96" y="519" fill="#e4e4e6" font-size="12.5">Spoke A &rarr; Home transit dies at the pfSense packet filter</text>
+        <text x="96" y="536" fill="#a8a8ad" font-size="11.5">Hub forwards every packet (confirmed by tcpdump); the rule never compiles for wg1</text>
+      </g>
+    </svg>
+    <figcaption>Dot travel time is scaled from measured RTT. The West Europe leg takes roughly four times as long to cross as the East US leg. &middot; <a href="https://github.com/syncluv/Azure-Mastery-Labs/tree/main/lab-05-sdwan-azure" style="color:#ffb070;">Full writeup and diagnostics on GitHub &rarr;</a></figcaption>
+  </figure>
+
+  <section class="grid">
+    <div>
+      <h2>Measured performance</h2>
+      <table>
+        <thead><tr><th>Link</th><th>Result</th><th style="text-align:right;">RTT</th></tr></thead>
+        <tbody>
+          <tr><td>Home &harr; Hub</td><td class="result">Handshake + RX/TX confirmed, 0% loss</td><td class="rtt">local</td></tr>
+          <tr><td>Hub &harr; Spoke A</td><td class="result">7/7 packets, 0% loss</td><td class="rtt">~20 ms</td></tr>
+          <tr><td>Hub &harr; Spoke B</td><td class="result">6/6 packets, 0% loss</td><td class="rtt">~87 ms</td></tr>
+          <tr><td>Spoke A &harr; Spoke B (direct)</td><td class="result">9/10 packets</td><td class="rtt">~82 ms</td></tr>
+        </tbody>
+      </table>
+      <p class="foot-note">Transit addressing is kept in 172.16.0.0/16, one /30 per tunnel, so any 172.16.x address in a routing table or capture is plumbing, and everything else is real site traffic.</p>
+    </div>
+
+    <div>
+      <h2>Where the movement stops</h2>
+      <div class="card">
+        <div class="card-kicker">Limitation 1 · pfSense</div>
+        <div class="card-title">Rules never reach the running filter</div>
+        <div class="card-body">Every rule on the unassigned WireGuard tab looked right in the GUI. <code>pfctl -sr | grep -i wg1</code> showed zero compiled rules. Assigning the tunnel as a real interface fixed compilation, but each rule still emerged with a TCP-only <code>flags S/SA</code> clause baked in.</div>
+      </div>
+      <div class="card">
+        <div class="card-kicker">Limitation 2 · WireGuard</div>
+        <div class="card-title">AllowedIPs is a source filter, not just a route</div>
+        <div class="card-body">A correct route is not enough: a peer silently drops packets whose source it does not explicitly recognize. Widening AllowedIPs at every hop of the A&rarr;Hub&rarr;B failover path, verified by <code>show configuration</code>, still did not pass traffic.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  var notes = {
+    all: 'Four independently verified tunnels, all carrying real bidirectional traffic.',
+    direct: 'The SD-WAN piece: branch to branch over a shortcut instead of detouring through the hub.',
+    relay: 'Hub-and-spoke legs only. The transit path through the hub is diagnosed but unresolved.'
+  };
+  var buttons = document.querySelectorAll('.mode-btn');
+  var hubGroups = document.querySelectorAll('[data-group="hub"]');
+  var directGroup = document.querySelector('[data-group="direct"]');
+  var blockedNote = document.getElementById('blockedNote');
+  var modeNote = document.getElementById('modeNote');
+
+  function setMode(mode) {
+    buttons.forEach(function (b) { b.classList.toggle('active', b.dataset.mode === mode); });
+    var showHub = mode === 'all' || mode === 'relay';
+    var showDirect = mode === 'all' || mode === 'direct';
+    hubGroups.forEach(function (g) { g.style.opacity = showHub ? 1 : 0.1; });
+    directGroup.style.opacity = showDirect ? 1 : 0.1;
+    blockedNote.style.opacity = mode === 'relay' ? 1 : 0;
+    modeNote.textContent = notes[mode];
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { setMode(b.dataset.mode); });
+  });
+</script>
+</body>
+</html>
