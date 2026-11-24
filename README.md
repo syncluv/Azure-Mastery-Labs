@@ -22,6 +22,7 @@ A collection of **production-grade Azure infrastructure labs** demonstrating ent
 | [03 - Enterprise Migration](./03-enterprise-migration) | On-prem to Azure migration with Azure DevOps CI/CD | ✅ Complete |
 | [04 - M365 & Azure Security Engineering](./04-m365-security-engineering) | Zero Trust · Defender · Sentinel · Purview DLP · Automation | ✅ Complete |
 | [05 - Multi-Region SD-WAN on Azure](./lab-05-sdwan-azure) | Hub-and-spoke WireGuard mesh across Canada Central, East US, and West Europe, plus an on-prem pfSense edge | ✅ Complete |
+| [06 - Zero Trust on Azure with Azure OpenAI](./lab-06-zero-trust-azure) | Identity-aware proxy (Pomerium + Entra ID), default-deny NSG segmentation, and Azure OpenAI behind a private endpoint with managed identity and no API keys | ✅ Complete |
 
 ---
 
@@ -61,6 +62,13 @@ Home Lab (pfSense) ⇄ Hub (VyOS, Canada Central)
                         [direct WireGuard shortcut]
 ```
 
+### Lab 06: Zero Trust on Azure with Azure OpenAI
+
+```
+User → Pomerium (Entra ID sign-in) → Web tier → AI gateway → Private endpoint → Azure OpenAI
+Compromised workstation: default-deny NSGs, no identity, no keys, no public path
+```
+
 ---
 
 ## 🛠️ Technologies Used
@@ -97,6 +105,18 @@ Home Lab (pfSense) ⇄ Hub (VyOS, Canada Central)
 [![pfSense](https://img.shields.io/badge/pfSense-Firewall-EA7125?style=flat-square)](https://www.pfsense.org)
 [![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)](https://microsoft.com/powershell)
 
+**Lab 06**
+
+[![Entra ID](https://img.shields.io/badge/Microsoft-Entra_ID-0078D4?style=flat-square&logo=microsoftazure)](https://entra.microsoft.com)
+[![Azure OpenAI](https://img.shields.io/badge/Azure-OpenAI-0078D4?style=flat-square&logo=microsoftazure)](https://azure.microsoft.com/products/ai-services/openai-service)
+[![Private Link](https://img.shields.io/badge/Azure-Private_Link-0078D4?style=flat-square&logo=microsoftazure)](https://learn.microsoft.com/azure/private-link/)
+[![NSG](https://img.shields.io/badge/Azure-NSG-28A745?style=flat-square&logo=microsoftazure)](https://azure.microsoft.com)
+[![Pomerium](https://img.shields.io/badge/Pomerium-Identity_Aware_Proxy-6E43E8?style=flat-square)](https://www.pomerium.com)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com)
+[![Azure CLI](https://img.shields.io/badge/Azure-CLI-0078D4?style=flat-square&logo=microsoftazure)](https://learn.microsoft.com/cli/azure)
+[![KQL](https://img.shields.io/badge/KQL-Query_Language-0078D4?style=flat-square)](https://learn.microsoft.com/kusto)
+[![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)](https://microsoft.com/powershell)
+
 ---
 
 ## 💰 Cost Warning
@@ -108,6 +128,7 @@ Home Lab (pfSense) ⇄ Hub (VyOS, Canada Central)
 | Lab 03 | ~$30–50/day | Delete all migration resources after lab |
 | Lab 04 | **$0** | Runs entirely within M365 + Azure free tiers |
 | Lab 05 | ~$1–5 total | 3 small VMs across 3 regions; deallocated between sessions, fully destroyed after the lab |
+| Lab 06 | Low | 4 small VMs, deallocated between sessions, plus a private endpoint and minimal OpenAI usage; fully destroyed after the lab |
 
 > **Always delete resources immediately after completing each lab!**
 
